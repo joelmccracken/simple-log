@@ -1,0 +1,8 @@
+[package]
+name = "simple-log"
+version = "0.1.0"
+authors = ["Joel McCracken <mccracken.joel@gmail.com>"]
+
+[dependencies.nickel]
+
+git = "https://github.com/nickel-org/nickel.rs.git"

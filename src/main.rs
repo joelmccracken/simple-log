@@ -1,19 +1,16 @@
-#[macro_use] extern crate nickel;
+use std::io::prelude::*;
+use std::fs::File;
+use std::io;
 
-use nickel::Nickel;
-
-fn say_hello() -> &'static str {
-    "Hello dear world!"
+fn log_something(filename: &'static str, string: &'static [u8; 12]) -> io::Result<()> {
+    let mut f = try!(File::create(filename));
+    try!(f.write_all(string));
+    Ok(())
 }
 
 fn main() {
-    let mut server = Nickel::new();
-
-    server.utilize(router! {
-        get "**" => |_req, _res| {
-            say_hello()
-        }
-    });
-
-    server.listen("127.0.0.1:6767");
+    match log_something("log.txt", b"ITS ALIVE!!!") {
+        Ok(..) => println!("File created!"),
+        Err(..) => println!("Error: could not create file.")
+    }
 }

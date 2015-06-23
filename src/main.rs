@@ -2,7 +2,7 @@
 extern crate chrono;
 
 use std::io::prelude::*;
-use std::fs::{File,OpenOptions};
+use std::fs::OpenOptions;
 use std::io;
 use chrono::{DateTime,Local};
 
@@ -32,16 +32,11 @@ fn log_time(filename: &'static str) -> io::Result<()> {
     Ok(())
 }
 
-fn main2() {
+fn do_log_time() -> String {
     match log_time("log.txt") {
-        Ok(..) => println!("File created!"),
-        Err(e) => println!("Error: {}", e)
+        Ok(..) => format!("File created!"),
+        Err(e) => format!("Error: {}", e)
     }
-}
-
-
-fn say_hello() -> &'static str {
-    "Hello dear world!"
 }
 
 fn main() {
@@ -49,7 +44,7 @@ fn main() {
 
     server.utilize(router! {
         get "**" => |_req, _res| {
-            say_hello()
+            do_log_time()
         }
     });
 

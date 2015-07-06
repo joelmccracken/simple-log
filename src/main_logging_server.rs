@@ -24,17 +24,19 @@ fn record_entry_in_log(filename: &str, bytes: &[u8]) -> io::Result<()> {
     Ok(())
 }
 
-fn log_time(filename: &'static str) -> io::Result<()> {
+fn log_time(filename: &'static str) -> io::Result<String> {
     let entry = formatted_time_entry();
-    let bytes = entry.as_bytes();
+    {
+        let bytes = entry.as_bytes();
 
-    try!(record_entry_in_log(filename, &bytes));
-    Ok(())
+        try!(record_entry_in_log(filename, &bytes));
+    }
+    Ok(entry)
 }
 
 fn do_log_time() -> String {
     match log_time("log.txt") {
-        Ok(..) => format!("File created!"),
+        Ok(entry) => format!("Entry Logged: {}", entry),
         Err(e) => format!("Error: {}", e)
     }
 }

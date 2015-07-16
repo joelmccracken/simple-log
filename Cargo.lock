@@ -136,7 +136,7 @@ dependencies = [
 [[package]]
 name = "nickel"
 version = "0.5.0"
-source = "git+https://github.com/nickel-org/nickel.rs.git#69546f58548180e708503a8a47d4134c2a6ffbbc"
+source = "git+https://github.com/nickel-org/nickel.rs.git#20adf66ed17a4fc68e6934ce5e206d98925e4464"
 dependencies = [
  "groupable 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",

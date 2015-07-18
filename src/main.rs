@@ -62,11 +62,9 @@ fn main() {
     let logfile_path = matches.value_of("LOG FILE").unwrap().to_string();
     let auth_token   = matches.value_of("AUTH TOKEN");
 
-
-
     server.utilize(router! {
         get "**" => |_req, _res| {
-            do_log_time(logfile_path, auth_token)//auth_token)
+            do_log_time(thing, Some(thing))
         }
     });
 

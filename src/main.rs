@@ -62,12 +62,16 @@ fn main() {
     let logfile_path = matches.value_of("LOG FILE").unwrap().to_string();
     let auth_token   = matches.value_of("AUTH TOKEN");
 
+    let auth_token_string = match auth_token {
+        Some(str) => Some(str.to_string()),
+        None => None
+    };
+
     server.utilize(router! {
         get "**" => |_req, _res| {
-            do_log_time(thing, Some(thing))
+            do_log_time(logfile_path.clone(), auth_token_string.clone())
         }
     });
 
     server.listen("127.0.0.1:6767");
 }
-

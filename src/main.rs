@@ -37,7 +37,7 @@ fn log_time(filename: String) -> io::Result<String> {
     Ok(entry)
 }
 
-fn do_log_time(logfile_path: String, auth_token: Option<&str>) -> String {
+fn do_log_time(logfile_path: String, auth_token: Option<String>) -> String {
     match log_time(logfile_path) {
         Ok(entry) => format!("Entry Logged: {}", entry),
         Err(e) => format!("Error: {}", e)
@@ -45,8 +45,6 @@ fn do_log_time(logfile_path: String, auth_token: Option<&str>) -> String {
 }
 
 fn main() {
-    let mut server = Nickel::new();
-
     let matches = App::new("simple-log").version("v0.0.1")
         .arg(Arg::with_name("LOG FILE")
              .short("l")
@@ -60,18 +58,18 @@ fn main() {
         .get_matches();
 
     let logfile_path = matches.value_of("LOG FILE").unwrap().to_string();
-    let auth_token   = matches.value_of("AUTH TOKEN");
-
-    let auth_token_string = match auth_token {
+    let auth_token = match matches.value_of("AUTH TOKEN") {
         Some(str) => Some(str.to_string()),
         None => None
     };
 
+    let mut server = Nickel::new();
     server.utilize(router! {
         get "**" => |_req, _res| {
-            do_log_time(logfile_path.clone(), auth_token_string.clone())
+            do_log_time(logfile_path, auth_token)
         }
     });
 
     server.listen("127.0.0.1:6767");
+
 }

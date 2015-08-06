@@ -66,7 +66,7 @@ fn main() {
     let mut server = Nickel::new();
     server.utilize(router! {
         get "**" => |_req, _res| {
-            do_log_time(logfile_path, auth_token)
+            do_log_time(logfile_path.clone(), auth_token.clone())
         }
     });
 

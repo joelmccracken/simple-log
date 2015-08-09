@@ -17,7 +17,7 @@ fn formatted_time_entry() -> String {
     formatted
 }
 
-fn record_entry_in_log(filename: String, bytes: &[u8]) -> io::Result<()> {
+fn record_entry_in_log(filename: &String, bytes: &[u8]) -> io::Result<()> {
     let mut file = try!(OpenOptions::new().
                         append(true).
                         write(true).
@@ -32,7 +32,7 @@ fn log_time(filename: &String) -> io::Result<String> {
     {
         let bytes = entry.as_bytes();
 
-        try!(record_entry_in_log(filename.clone(), &bytes));
+        try!(record_entry_in_log(filename, &bytes));
     }
     Ok(entry)
 }

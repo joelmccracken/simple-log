@@ -37,8 +37,8 @@ fn log_time(filename: String) -> io::Result<String> {
     Ok(entry)
 }
 
-fn do_log_time(logfile_path: String, auth_token: Option<String>) -> String {
-    match log_time(logfile_path) {
+fn do_log_time(logfile_path: &String, auth_token: Option<String>) -> String {
+    match log_time(logfile_path.clone()) {
         Ok(entry) => format!("Entry Logged: {}", entry),
         Err(e) => format!("Error: {}", e)
     }
@@ -66,7 +66,7 @@ fn main() {
     let mut server = Nickel::new();
     server.utilize(router! {
         get "**" => |_req, _res| {
-            do_log_time(logfile_path.clone(), auth_token.clone())
+            do_log_time(&logfile_path, auth_token.clone())
         }
     });
 

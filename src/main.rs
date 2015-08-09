@@ -27,18 +27,18 @@ fn record_entry_in_log(filename: String, bytes: &[u8]) -> io::Result<()> {
     Ok(())
 }
 
-fn log_time(filename: String) -> io::Result<String> {
+fn log_time(filename: &String) -> io::Result<String> {
     let entry = formatted_time_entry();
     {
         let bytes = entry.as_bytes();
 
-        try!(record_entry_in_log(filename, &bytes));
+        try!(record_entry_in_log(filename.clone(), &bytes));
     }
     Ok(entry)
 }
 
 fn do_log_time(logfile_path: &String, auth_token: Option<String>) -> String {
-    match log_time(logfile_path.clone()) {
+    match log_time(logfile_path) {
         Ok(entry) => format!("Entry Logged: {}", entry),
         Err(e) => format!("Error: {}", e)
     }
